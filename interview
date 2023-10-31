@@ -1,0 +1,38 @@
+public class Invoice_Cloud {
+    public static void main(String[] args) {
+
+        //setup your chromedriver with webdrivermanager
+        WebDriverManager.chromedriver().setup();
+        //declare chrome options
+        ChromeOptions options = new ChromeOptions();
+        //start maximized for mac
+        options.addArguments("--kiosk");
+        //define the chrome driver to use for your test
+        //define the webdriver
+        WebDriver driver = new ChromeDriver(options);
+
+        int n;
+        try {
+
+            //navigate to the internet herokuapp
+            driver.navigate().to("The Internet (the-internet.herokuapp.com");
+            // Step 2: Add 'n' number of elements (for example, buttons)
+            n = 5;
+            for (int i = 0; i < n; i++) {
+                driver.findElement(By.xpath("//button[contains(text(), 'Add Element')]")).click();
+            }
+        }
+
+        //Assert that 'n' number of elements exist on the page
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".added-manually"), n));
+        // If the assertion passes, print a success message
+        System.out.println("Successfully added and verified " + n + " elements.");
+    } catch (Exception e); {
+        e.printStackTrace();
+    } finally{
+        // Close the browser
+        driver.quit();
+    }
+    }//end of main
+}//end of class
